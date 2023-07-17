@@ -2,7 +2,7 @@ import { faBell } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Navbar = () => {
-  return <nav className=" border-b border-slate-200 border-solid">
+  return <nav className="sticky  top-0 border-b border-slate-200 border-solid bg-white">
     <div className="container py-4 mx-auto px-2 flex justify-between items-center">
       <h3 className="text-1xl font-bold">Schedule Appointment</h3>
       <div className="flex items-center">
