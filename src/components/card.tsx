@@ -48,7 +48,7 @@ const Card = ({ className, visit }: CardProps) => {
           <div ref={timeSlotRef} className="text-sm overflow-slider w-full">
             {
               Array(10).fill(0).map((_, i) =>
-                <Link href='/1' key={i} className="mr-3 whitespace-nowrap inline-flex border-slate-300 border py-3 px-4 rounded-full">
+                <Link href={`/${i+1}`} key={i} className="mr-3 whitespace-nowrap inline-flex border-slate-300 border py-3 px-4 rounded-full">
                   <span className='font-semibold me-1'>Today,</span>
                   <span>3:{i}PM</span>
                 </Link>

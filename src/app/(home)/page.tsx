@@ -37,7 +37,6 @@ const Page = () => {
           </label>
         </div>
       </div>
-
       <div className='mt-3'>
         {
           Array(10).fill(0).map((_, i) =>
@@ -45,8 +44,6 @@ const Page = () => {
           )
         }
       </div>
-
-
     </div>
   </div>;
 };
