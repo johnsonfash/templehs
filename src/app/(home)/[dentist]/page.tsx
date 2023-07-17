@@ -1,6 +1,7 @@
 'use client'
 
 import { faBell, faCalendarCheck, faClock, faCreditCard } from "@fortawesome/free-regular-svg-icons";
+import { faCircleNotch, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { formHandler } from "@lib/form";
 import { FC, FormEvent, useState } from "react";
@@ -75,11 +76,13 @@ const DentistPage: FC<DentistPageProp> = (prop) => {
       </div>
       <form onSubmit={handleSubmit}>
         <label className="flex items-center mt-5">
-          <input required name='confirmed' type="checkbox" className="accent-green-800 inline-block w-5 h-5" />
+          <input disabled={loading} required name='confirmed' type="checkbox" className="accent-green-800 inline-block w-5 h-5" />
           <span className="inline-block ms-2">I certify that i have read and accept the terms of Temple</span>
         </label>
         <div className="flex justify-end mt-5">
-          <button className="bg-green-900 px-7 active:ring-2 ring-green-600 py-2 rounded-3xl text-white border-none">Schedule Appointment</button>
+          <button type='submit' disabled={loading} className="disabled:opacity-70 bg-green-900 px-7 active:ring-2 ring-green-600 py-2 rounded-3xl text-white border-none">
+            {loading && <FontAwesomeIcon icon={faSpinner} className='mr-2 animate-spin' />}
+            Schedule Appointment</button>
         </div>
       </form>
     </div>
