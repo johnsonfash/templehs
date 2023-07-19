@@ -1,17 +1,18 @@
+/* eslint-disable @next/next/no-img-element */
 'use client'
 
+import { Doctor, timeConv } from "@client-lib";
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
-import { useRef, useState } from "react";
-
+import { useEffect, useRef, useState } from "react";
 
 interface CardProps {
   className?: string
-  visit?: 'Virtual' | 'In-person'
+  data?: Doctor
 }
 
-const Card = ({ className, visit }: CardProps) => {
+const Card = ({ className, data }: CardProps) => {
   const timeSlotRef = useRef<HTMLDivElement>(null);
   const [dim, setDim] = useState(1)
 
@@ -32,27 +33,28 @@ const Card = ({ className, visit }: CardProps) => {
       <div className='flex items-start'>
         <div className='flex w-full pt-5 px-4'>
           <div className="h-12 mr-3 w-12 min-w-[3rem] min-h-[3rem] rounded-full overflow-hidden flex justify-center items-center">
-            <img src="/avatar.png" className="cover-full" alt="" />
+            <img src={data?.image} className="cover-full" alt="" />
           </div>
           <div>
-            <h4 className="text-xl">Leo Standon, MD</h4>
-            <p className='text-slate-600'>Care Team Clinician Supervisor</p>
+            <h4 className="text-xl">{data?.name}, {data?.abbr}</h4>
+            <p className='text-slate-600'>{data?.field}</p>
           </div>
         </div>
-        <div className={`whitespace-nowrap ${visit === 'Virtual' ? 'bg-green-100 py-1 text-green-700' : 'bg-blue-100 py-1 text-blue-500'} px-5`}>{visit} visit only</div>
+        <div className={`whitespace-nowrap ${data?.visit_type === 'Virtual' ? 'bg-green-100 py-1 text-green-700' : 'bg-blue-100 py-1 text-blue-500'} px-5`}>{data?.visit_type} visit only</div>
       </div>
       <div className="px-4 py-3">
-        <p className='text-slate-600 line-clamp-3'>Dr. Lao Noto is a board certified intermist with a broad experience treating both complex and simple medical conditions. He has been practicing for more than 10 years. He graduated from Turf Univ...</p>
+        <p className='text-slate-600 line-clamp-3'>{data?.bio}</p>
         <p className="text-md text-slate-800 my-3 font-semibold">Next Availability Slots</p>
         <div className="flex items-center">
           <div ref={timeSlotRef} className="text-sm overflow-slider w-full">
             {
-              Array(10).fill(0).map((_, i) =>
-                <Link href={`/${i+1}`} key={i} className="mr-3 whitespace-nowrap inline-flex border-slate-300 border py-3 px-4 rounded-full">
-                  <span className='font-semibold me-1'>Today,</span>
-                  <span>3:{i}PM</span>
-                </Link>
-              )
+              data?.available_time?.length ?
+                data?.available_time?.map((time, i) =>
+                  <Link href={`/${data.id}?date=${data?.available_date ? data?.available_date[i] : ''}&time=${time}`} key={i} className="mr-3 whitespace-nowrap inline-flex border-slate-300 border py-3 px-4 rounded-full">
+                    <span className='font-semibold me-1'>Today,</span>
+                    <span>{timeConv(time)}</span>
+                  </Link>
+                ) : null
             }
           </div>
           <div className='whitespace-nowrap pl-5 flex space-x-5 text-xl'>
