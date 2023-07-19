@@ -1,23 +1,31 @@
-'use client'
-
+import { CONST, Doctor, FetchResultResp, appointmentTIme } from "@client-lib";
+import Form from "@components/form";
 import { faBell, faCalendarCheck, faClock, faCreditCard } from "@fortawesome/free-regular-svg-icons";
-import { faCircleNotch, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { formHandler } from "@lib/form";
-import { FC, FormEvent, useState } from "react";
+import { FC } from "react";
 
 interface DentistPageProp {
-  params: { dentist: string }
-  searchParams: { date: string }
+  params: { doctor: string }
+  searchParams: { date: string, time: string }
 }
 
-const DentistPage: FC<DentistPageProp> = (prop) => {
-  const [loading, setLoading] = useState(false)
-
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    const { confirmed } = formHandler(e, ['confirmed'])
-    console.log(confirmed)
+const getDoctor = async (id: string): Promise<FetchResultResp<Doctor>> => {
+  try {
+    const res = await fetch(CONST.BASE_URL + '/api/appointment?doctor_id=' + id, {
+      next: {
+        revalidate: 300
+      }
+    })
+    return await res.json()
+  } catch (e: any) {
+    return { status: false, message: e.message, data: null }
   }
+}
+
+const DentistPage: FC<DentistPageProp> = async ({ params, searchParams }) => {
+
+  const { status, message, data } = await getDoctor(params.doctor)
+
   return <div className="flex space-x-36 justify-between mb-5">
     <h1 className="text-3xl mt-10 w-5/12">
       Confirm your appointment details.
@@ -26,11 +34,11 @@ const DentistPage: FC<DentistPageProp> = (prop) => {
       <div className='rounded-md shadow-md shadow-slate-400/40'>
         <div className='flex w-full pt-5 px-4'>
           <div className="h-12 mr-3 w-12 min-w-[3rem] min-h-[3rem] rounded-full overflow-hidden flex justify-center items-center">
-            <img src="/avatar.png" className="cover-full" alt="" />
+            <img src={data?.image} className="cover-full" alt="" />
           </div>
           <div>
-            <h4 className="text-xl font-medium">Leo Standon, MD</h4>
-            <p className='text-slate-600'>Care Team Clinician Supervisor</p>
+            <h4 className="text-xl font-medium">{data?.name}, {data?.abbr}</h4>
+            <p className='text-slate-600'>{data?.field}</p>
           </div>
         </div>
         <div className="px-4 py-3">
@@ -41,7 +49,7 @@ const DentistPage: FC<DentistPageProp> = (prop) => {
                   <FontAwesomeIcon icon={faCalendarCheck} className='mr-2' />
                   Date:
                 </td>
-                <td className='pl-10 font-medium'>Tomorrow, June 12. 3:00PM</td>
+                <td className='pl-10 font-medium'>Today, {appointmentTIme(searchParams.date, searchParams.time)}</td>
               </tr>
               <tr>
                 <td>
@@ -74,17 +82,7 @@ const DentistPage: FC<DentistPageProp> = (prop) => {
           </table>
         </div>
       </div>
-      <form onSubmit={handleSubmit}>
-        <label className="flex items-center mt-5">
-          <input disabled={loading} required name='confirmed' type="checkbox" className="accent-green-800 inline-block w-5 h-5" />
-          <span className="inline-block ms-2">I certify that i have read and accept the terms of Temple</span>
-        </label>
-        <div className="flex justify-end mt-5">
-          <button type='submit' disabled={loading} className="disabled:opacity-70 bg-green-900 px-7 active:ring-2 ring-green-600 py-2 rounded-3xl text-white border-none">
-            {loading && <FontAwesomeIcon icon={faSpinner} className='mr-2 animate-spin' />}
-            Schedule Appointment</button>
-        </div>
-      </form>
+      <Form prop={searchParams} doctor_id={params.doctor} />
     </div>
   </div>;
 };
