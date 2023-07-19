@@ -1,11 +1,10 @@
 import { SEED_DATABASE, up } from "@serve-lib";
 
-const sleep = () => new Promise(r => setTimeout(() => r, 3000))
+const sleep = () => new Promise(r => setTimeout(() => r, 1000))
 const Page = async () => {
   await up()
-  await sleep()
   await SEED_DATABASE()
-  return <div>Page</div>;
+  return <div>Page is UP</div>;
 };
 
 export default Page;
