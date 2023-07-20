@@ -1,6 +1,7 @@
 'use client'
 
 import { CONST, formHandler } from "@client-lib";
+import { setToken } from "@client-lib/token";
 import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -22,22 +23,22 @@ const LoginPage = () => {
       const result = await fetch(CONST.BASE_URL + '/auth/login', {
         method: 'POST',
         body: JSON.stringify(data),
-        credentials: 'include',
         headers: {
           'Content-Type': 'application/json'
         }
       })
       const res = await result.json()
       if (res.status) {
-        console.log(res)
+        setToken(res.data)
         route.push('/')
       } else {
         setError(res)
+        setLoading(false)
       }
     } catch (e: any) {
       setError({ status: false, message: e.message })
+      setLoading(false)
     }
-    setLoading(false)
   }
 
   return <div className="container mx-auto">

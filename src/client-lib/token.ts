@@ -1,4 +1,6 @@
 import jwtDecode from "jwt-decode";
+import Cookies from 'js-cookie'
+import { CONST } from "./constants";
 
 export const goodToken = (token: string): boolean => {
   try {
@@ -16,4 +18,12 @@ export const goodToken = (token: string): boolean => {
   } catch (error) {
     return false
   }
+}
+
+export const setToken = (token: string) => {
+  Cookies.set(CONST.COOKIE, token)
+}
+
+export const getToken = () => {
+  return Cookies.get(CONST.COOKIE) ?? ''
 }

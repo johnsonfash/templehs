@@ -3,6 +3,7 @@ import Form from "@components/form";
 import { faBell, faCalendarCheck, faClock, faCreditCard } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FC } from "react";
+import { cookies } from 'next/headers'
 
 interface DentistPageProp {
   params: { doctor: string }
@@ -12,6 +13,9 @@ interface DentistPageProp {
 const getDoctor = async (id: string): Promise<FetchResultResp<Doctor>> => {
   try {
     const res = await fetch(CONST.BASE_URL + '/appointment?doctor_id=' + id, {
+      headers: {
+        'Authorization': 'Bearer ' + cookies().get(CONST.COOKIE)?.value
+      },
       next: {
         revalidate: 300
       }

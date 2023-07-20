@@ -1,6 +1,7 @@
 import { CONST, Doctor, FetchResultResp, objectToURL } from "@client-lib";
 import Card from "@components/card";
 import DateInput from "@components/filter";
+import { cookies } from 'next/headers'
 
 type SearchProp = { date: string, time: string, field: string }
 interface PageProp {
@@ -12,6 +13,9 @@ interface PageProp {
 const getAppointMents = async (params: SearchProp): Promise<FetchResultResp<Doctor[]>> => {
   try {
     const res = await fetch(CONST.BASE_URL + '/home?' + objectToURL(params), {
+      headers: {
+        'Authorization': 'Bearer ' + cookies().get(CONST.COOKIE)?.value
+      },
       next: {
         revalidate: 3000
       }
