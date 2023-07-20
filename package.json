@@ -1,9 +1,6 @@
 {
   "name": "templehs",
   "version": "0.1.0",
-  "engines": {
-    "node": "18.x"
-  },
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -19,31 +16,18 @@
     "@types/node": "20.4.2",
     "@types/react": "18.2.15",
     "@types/react-dom": "18.2.7",
-    "argon2": "^0.30.3",
-    "better-sqlite3": "^8.4.0",
     "eslint": "8.45.0",
     "eslint-config-next": "13.4.10",
-    "jose": "^4.14.4",
-    "jsonwebtoken": "^9.0.1",
-    "knex": "^2.5.1",
-    "mysql": "^2.18.1",
-    "mysql2": "^3.5.2",
     "next": "13.4.10",
-    "oracledb": "^6.0.3",
-    "pg": "^8.11.1",
-    "pg-native": "^3.0.1",
-    "pg-query-stream": "^4.5.1",
     "react": "18.2.0",
     "react-date-picker": "^10.2.1",
     "react-dom": "18.2.0",
     "react-time-picker": "^6.2.1",
     "react-toastify": "^9.1.3",
-    "sqlite3": "^5.1.6",
-    "tedious": "^16.2.0",
     "typescript": "5.1.6"
   },
   "devDependencies": {
-    "@types/jsonwebtoken": "^9.0.2",
+    "@types/jwt-decode": "^3.1.0",
     "autoprefixer": "^10.4.14",
     "postcss": "^8.4.26",
     "tailwindcss": "^3.3.3"

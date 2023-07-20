@@ -11,7 +11,7 @@ interface PageProp {
 
 const getAppointMents = async (params: SearchProp): Promise<FetchResultResp<Doctor[]>> => {
   try {
-    const res = await fetch(CONST.BASE_URL + '/api/home?' + objectToURL(params), {
+    const res = await fetch(CONST.BASE_URL + '/home?' + objectToURL(params), {
       next: {
         revalidate: 3000
       }

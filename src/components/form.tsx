@@ -16,7 +16,7 @@ const Form = ({ prop, doctor_id }: FormProp) => {
     try {
       formHandler(e, ['confirmed'])
       setLoading(true)
-      const promise = await fetch(CONST.BASE_URL + '/api/appointment', {
+      const promise = await fetch(CONST.BASE_URL + '/appointment', {
         body: JSON.stringify({ doctor_id, date: prop.date, time: prop.time }),
         headers: { 'Content-Type': 'application/json' },
         method: 'POST',

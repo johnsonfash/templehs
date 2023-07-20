@@ -1,6 +1,6 @@
 export const CONST = Object.freeze({
   COOKIE: '__onc_',
-  BASE_URL: "http://localhost:3000"
+  BASE_URL: "https://oncode-backend.onrender.com"
 })
 
 export const fields = [

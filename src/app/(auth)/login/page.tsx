@@ -19,7 +19,7 @@ const LoginPage = () => {
       const data = formHandler(e, ['email', 'password'])
       setError({ status: true, message: '' })
       setLoading(true)
-      const result = await fetch(CONST.BASE_URL + '/api/auth', {
+      const result = await fetch(CONST.BASE_URL + '/auth/login', {
         method: 'POST',
         body: JSON.stringify(data),
         credentials: 'include',

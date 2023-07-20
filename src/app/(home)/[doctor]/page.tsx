@@ -11,7 +11,7 @@ interface DentistPageProp {
 
 const getDoctor = async (id: string): Promise<FetchResultResp<Doctor>> => {
   try {
-    const res = await fetch(CONST.BASE_URL + '/api/appointment?doctor_id=' + id, {
+    const res = await fetch(CONST.BASE_URL + '/appointment?doctor_id=' + id, {
       next: {
         revalidate: 300
       }
