@@ -2,7 +2,7 @@
   "name": "templehs",
   "version": "0.1.0",
   "engines": {
-    "node": ">=14.0.0 < 18.0.0"
+    "node": "18.x"
   },
   "private": true,
   "scripts": {
